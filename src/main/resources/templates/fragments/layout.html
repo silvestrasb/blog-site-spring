@@ -31,7 +31,7 @@
 <body>
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">SPRING_BLOG</a>
+        <a class="navbar-brand" th:href="@{/blogs}">SPRING_BLOG</a>
         <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
                 class="navbar-toggler"
                 data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
@@ -47,10 +47,13 @@
                     <a class="nav-link" href="#">Register</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Feed</a>
+                    <a class="nav-link" th:href="@{/blogs}">Feed</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/blogs/create}">Create</a>
                 </li>
             </ul>
         </div>

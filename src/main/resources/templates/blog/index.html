@@ -3,12 +3,32 @@
 <head>
 
     <head th:replace="fragments/layout :: head('Blog list')"></head>
+    <link rel="stylesheet" th:href="@{/css/blog-style.css}">
 </head>
 <body>
 
 <header th:replace="fragments/layout :: header"></header>
 
-<h1>Test List Blogs</h1>
+<main>
+    <div class="blog-list" style="padding: 20px;">
+        <div class="justify-content-center">
+            <div class="card">
+                <h2 style="text-align: center">TITLE</h2>
+                <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco.
+                </p>
+            </div>
+            <div class="card">
+                <h2 style="text-align: center">TITLE</h2>
+                <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco.
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
 
 <footer th:replace="fragments/layout :: footer"></footer>
 
