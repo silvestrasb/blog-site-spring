@@ -3,6 +3,8 @@ package lt.codeacademy.blog_site.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,5 +19,9 @@ public class Blog {
 
     @Column(name = "content")
     private String content;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "blog_id")
+    private List<Comment> comments;
 
 }
