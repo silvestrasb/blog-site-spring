@@ -21,4 +21,8 @@ public class BlogService {
     public List<Blog> getAll(){
         return blogRepository.findAll();
     }
+
+    public void deleteBlog(Blog blog) {
+        blogRepository.delete(blog);
+    }
 }
