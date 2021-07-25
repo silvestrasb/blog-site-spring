@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <head th:replace="fragments/layout :: head('Blog list')"></head>
@@ -16,22 +16,22 @@
             <tr th:each="blog: ${blogList}">
                 <div class="card">
                     <h2 style="text-align: center" th:text="${blog.title}">TITLE</h2>
-                    <p th:text="${blog.content}">Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do
+                    <p th:text="${blog.content}">Sunt in culpa qui officia deserunt mollit anim id est laborum
+                        consectetur adipiscing elit, sed do
                         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
                         nostrud
                         exercitation ullamco.
                     </p>
+
+                    <a class="btn btn-primary btn-lg btn-block"
+                       th:href="@{'/blogs/' + ${blog.id} + '/view'}">
+                        View
+                    </a>
+                    <a class="btn btn-danger btn-lg btn-block"
+                       th:href="@{'/blogs/' + ${blog.id} + '/edit'}">
+                        Edit
+                    </a>
                 </div>
-<!--
-                <div class="card">
-                    <h2 style="text-align: center">TITLE</h2>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                        nostrud
-                        exercitation ullamco.
-                    </p>
-                </div>
--->
             </tr>
         </div>
     </div>
