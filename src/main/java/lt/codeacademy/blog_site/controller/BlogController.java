@@ -1,7 +1,9 @@
 package lt.codeacademy.blog_site.controller;
 
 import lt.codeacademy.blog_site.entity.Blog;
+import lt.codeacademy.blog_site.entity.Comment;
 import lt.codeacademy.blog_site.service.BlogService;
+import lt.codeacademy.blog_site.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +20,13 @@ import java.util.stream.Collectors;
 public class BlogController {
 
     private final BlogService blogService;
+    private final CommentService commentService;
 
-    public BlogController(BlogService blogService) {
+    public BlogController(BlogService blogService, CommentService commentService) {
         this.blogService = blogService;
+        this.commentService = commentService;
     }
+
 
     @GetMapping
     public String getBlogs(Model model) {
@@ -47,16 +52,25 @@ public class BlogController {
         return "blog/create";
     }
 
-    @GetMapping("{id}/view")
+    @GetMapping("/{id}/view")
     public String getBlog(@PathVariable("id") Blog blog, Model model){
         model.addAttribute("blog", blog);
+        model.addAttribute("comments", commentService.getAllByBlogId(blog.getId()));
+        model.addAttribute("commentBox", new Comment());
         return "blog/view";
     }
 
-    @GetMapping("{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editBlog(@PathVariable("id") Blog blog, Model model){
         model.addAttribute("blog", blog);
         return "blog/create";
+    }
+
+
+    @GetMapping("/{id}/delete")
+    public String deleteCar(@PathVariable("id") Blog blog) {
+        blogService.deleteBlog(blog);
+        return "redirect:/blogs";
     }
 
     @PostMapping("/create")
@@ -65,9 +79,12 @@ public class BlogController {
         return "redirect:/blogs";
     }
 
-    @GetMapping("/{id}/delete")
-    public String deleteCar(@PathVariable("id") Blog blog) {
-        blogService.deleteBlog(blog);
-        return "redirect:/blogs";
+    @PostMapping("/{id}/add-comment")
+    public String addComment(@PathVariable("id") Blog blog, Comment comment) {
+        comment.setId(null);
+        comment.setBlogId(blog.getId());
+        commentService.save(comment);
+        return "redirect:/blogs/" + blog.getId() + "/view";
+
     }
 }
