@@ -10,7 +10,6 @@
 <main>
     <form method="POST" style="text-align: center" th:action="@{/blogs/create}" th:object="${blog}">
         <h3>Title</h3>
-        <input hidden th:field="*{id}">
         <input style="width: 790px;" th:field="*{title}" type="text">
         <h3>Content</h3>
         <textarea style="height: 300px; width: 1000px; border: 1px solid #999999; padding: 5px;"
