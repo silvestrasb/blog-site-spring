@@ -5,6 +5,7 @@ import lt.codeacademy.blog_site.repository.BlogRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BlogService {
@@ -19,7 +20,17 @@ public class BlogService {
     }
 
     public List<Blog> getAll(){
-        return blogRepository.findAll();
+        return blogRepository.getAllByOrderByIdDesc();
+    }
+
+    public List<Blog> getAllFirstNCharacters(int numOfCharacters){
+        return getAll().stream()
+                .map(blog -> {
+                            blog.setContent(blog.getContent().substring(0, Math.min(blog.getContent().length(), numOfCharacters)));
+                            return blog;
+                        }
+                )
+                .collect(Collectors.toList());
     }
 
     public void deleteBlog(Blog blog) {
