@@ -1,6 +1,5 @@
 package lt.codeacademy.blog_site.service;
 
-import lt.codeacademy.blog_site.entity.Blog;
 import lt.codeacademy.blog_site.entity.Comment;
 import lt.codeacademy.blog_site.repository.CommentRepository;
 import org.springframework.stereotype.Service;
@@ -11,11 +10,11 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-//
+
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
-//
+
     public List<Comment> getAllByBlogId(Long blogId) {
         return commentRepository.getAllByBlogId(blogId);
     }
@@ -24,4 +23,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    public void deleteById(Long blogId){
+        commentRepository.deleteById(blogId);
+    }
 }

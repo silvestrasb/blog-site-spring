@@ -1,29 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <head th:replace="fragments/layout :: head('Create a blog')"></head>
+    <head th:replace="fragments/layout :: head('Edit comment')"></head>
 </head>
 <body>
 
 <header th:replace="fragments/layout :: header"></header>
 
 <main>
-    <form method="POST" style="text-align: center" th:action="@{/blogs/create}" th:object="${blog}">
-        <h3>Title</h3>
-        <input style="width: 790px;" th:field="*{title}" type="text">
-        <h3>Content</h3>
+    <form method="POST" style="text-align: center"
+          th:action="@{'/blogs/' + ${comment.blogId} + '/comments/' + ${comment.id} + '/edit'}"
+          th:object="${comment}">
+        <h3>Edit Comment</h3>
         <textarea style="height: 300px; width: 1000px; border: 1px solid #999999; padding: 5px;"
                   th:field="*{content}"
                   type="text"></textarea>
         <br><br>
         <input class="btn btn-primary btn-lg" type="submit" value="Submit">
     </form>
-    <div style="text-align: center">
-        <a class="btn btn-danger btn-lg "
-           th:href="@{'/blogs/' + ${blog.id} + '/delete'}">
-            Delete
-        </a>
-    </div>
 </main>
 
 <footer th:replace="fragments/layout :: footer"></footer>
