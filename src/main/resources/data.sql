@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS "blog" cascade ;
-
 CREATE TABLE "blog"
 (
     id BIGSERIAL PRIMARY KEY NOT NULL,
@@ -8,10 +7,17 @@ CREATE TABLE "blog"
 );
 
 DROP TABLE IF EXISTS "comment" cascade ;
-
 CREATE TABLE "comment"
 (
     id BIGSERIAL PRIMARY KEY NOT NULL,
     content VARCHAR(300) NOT NULL,
     blog_id BIGINT REFERENCES blog(id)
+);
+
+DROP TABLE IF EXISTS "user" cascade ;
+CREATE TABLE "user"
+(
+    id BIGSERIAL PRIMARY KEY NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
 );
