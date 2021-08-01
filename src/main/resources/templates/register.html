@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="height:100vh">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Register</h2>
+                    <form th:action="@{/register}" method="POST" th:object="${user}">
+                        <div class="alert alert-error" th:if="${param.error}">
+                            Invalid username.
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="username" placeholder="Username" th:field="*{username}"
+                                   type="text">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="password" placeholder="Password" th:field="*{password}"
+                                   type="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></body>
+</html>
