@@ -1,7 +1,11 @@
 package lt.codeacademy.blog_site.controller;
 
 import lt.codeacademy.blog_site.entity.Comment;
+import lt.codeacademy.blog_site.entity.User;
 import lt.codeacademy.blog_site.service.CommentService;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +24,14 @@ public class CommentController {
     }
 
 
+    @PreAuthorize("hasRole('USER') && authentication.principal.id == #comment.user.id || hasRole('ADMIN')")
     @GetMapping("/{commentId}/delete")
-    public String deleteComment(@PathVariable Long blogId, @PathVariable Long commentId) {
-        commentService.deleteById(commentId);
+    public String deleteComment(@PathVariable Long blogId, @PathVariable("commentId") Comment comment, Authentication authentication) {
+        commentService.deleteById(comment.getId());
         return "redirect:/blogs/" + blogId + "/view";
     }
 
+    @PreAuthorize("hasRole('USER') && authentication.principal.id == #comment.user.id")
     @GetMapping("/{commentId}/edit")
     public String editComment(@PathVariable Long blogId, @PathVariable("commentId") Comment comment, Model model) {
         comment.setBlogId(blogId);
@@ -33,13 +39,16 @@ public class CommentController {
         return "comment/edit";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
-    public String addComment(@PathVariable Long blogId, Comment comment) {
+    public String addComment(@PathVariable Long blogId, Comment comment, @AuthenticationPrincipal User user) {
+        comment.setUser(user);
         comment.setBlogId(blogId);
         commentService.save(comment);
         return "redirect:/blogs/" + blogId + "/view";
     }
 
+    @PreAuthorize("hasRole('USER') && authentication.principal.id == #comment.user.id")
     @PostMapping("/{commentId}/edit")
     public String editComment(@PathVariable Long blogId, @PathVariable Long commentId, Comment comment) {
         comment.setId(commentId);

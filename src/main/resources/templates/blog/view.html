@@ -37,7 +37,8 @@
                         <tr th:each="comment: ${blog.comments}">
                             <!-- AVAILABLE COMMENTS-->
                             <div class="mt-2">
-                                <p class="comment-text" th:text="${comment.content}"></p>
+                                <h2 th:text="'USER: ' + ${comment.user.username}">Username</h2>
+                                <p class="comment-text" th:text="${comment.content}">Comment Content</p>
                             </div>
                             <div class="bg-white">
                                 <div class="d-flex flex-row fs-12">
