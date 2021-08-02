@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
 <head>
 
     <head th:replace="fragments/layout :: head('Blog list')"></head>
@@ -24,11 +26,15 @@
                     </p>
 
                     <a class="btn btn-primary btn-lg btn-block"
-                       th:href="@{'/blogs/' + ${blog.id} + '/view'}">
+                       th:href="@{'/blogs/' + ${blog.id} + '/view'}"
+                       th:text="#{button.view}"
+                    >
                         View
                     </a>
-                    <a class="btn btn-danger btn-lg btn-block"
-                       th:href="@{'/blogs/' + ${blog.id} + '/edit'}">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')"
+                            class="btn btn-danger btn-lg btn-block"
+                       th:href="@{'/blogs/' + ${blog.id} + '/edit'}"
+                    th:text="#{button.edit}">
                         Edit
                     </a>
                 </div>

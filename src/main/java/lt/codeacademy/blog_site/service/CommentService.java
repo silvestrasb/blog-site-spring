@@ -23,6 +23,10 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+//    TEMP:
+    public Comment getCommentById(Long id){
+        return commentRepository.getById(id);
+    }
     public void deleteById(Long blogId){
         commentRepository.deleteById(blogId);
     }
