@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/layout :: head('Blog list')"></head>
 <head>
@@ -37,25 +38,35 @@
                         <tr th:each="comment: ${blog.comments}">
                             <!-- AVAILABLE COMMENTS-->
                             <div class="mt-2">
-                                <h2 th:text="'USER: ' + ${comment.user.username}">Username</h2>
+                                <h2 th:text="#{username.title} + ' : ' + ${comment.user.username}">Username</h2>
                                 <p class="comment-text" th:text="${comment.content}">Comment Content</p>
                             </div>
                             <div class="bg-white">
                                 <div class="d-flex flex-row fs-12">
-                                    <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><a
+                                    <div
+                                            class="like p-2 cursor"
+                                            th:if="${#authorization.expression('hasRole(''ADMIN'')')} or ${#authentication.getName()} == ${comment.user.username}">
+                                        <i class="fa fa-thumbs-o-up"></i><a
                                             class="ml-1"
-                                            th:href="@{'/blogs/' + ${blog.id} + '/comments/' + ${comment.id} + '/delete'}">Delete</a>
+                                            th:href="@{'/blogs/' + ${blog.id} + '/comments/' + ${comment.id} + '/delete'}"
+                                            th:text="#{button.delete}">Delete</a>
                                     </div>
-                                    <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i>
+                                    <div
+                                            class="like p-2 cursor"
+                                            th:if="${#authorization.expression('hasRole(''ADMIN'')')} or ${#authentication.getName()} == ${comment.user.username}">
+                                        <i class="fa fa-commenting-o"></i>
                                         <a class="ml-1"
-                                           th:href="@{'/blogs/' + ${blog.id} + '/comments/' + ${comment.id} + '/edit'}">Edit</a>
+                                           th:href="@{'/blogs/' + ${blog.id} + '/comments/' + ${comment.id} + '/edit'}"
+                                        th:text="#{button.edit}"
+                                        >Edit</a>
                                     </div>
                                 </div>
                             </div>
                         </tr>
                     </div>
                     <!-- COMMENT BOX-->
-                    <form method="POST" style="text-align: center"
+                    <form method="POST"
+                          sec:authorize="hasRole('ROLE_USER')" style="text-align: center"
                           th:action="@{'/blogs/' + ${blog.id} + '/comments/create'}"
                           th:object="${commentBox}"
                     >

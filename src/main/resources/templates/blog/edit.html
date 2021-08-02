@@ -9,17 +9,18 @@
 
 <main>
   <form method="POST" style="text-align: center" th:action="@{'/blogs/' + ${blog.id} + '/edit'}" th:object="${blog}">
-    <h3>Title</h3>
+    <h3 th:text="#{blog.title}">Title</h3>
     <input style="width: 790px;" th:field="*{title}" type="text">
-    <h3>Content</h3>
+    <h3 th:text="#{blog.content}">Content</h3>
     <textarea style="height: 300px; width: 1000px; border: 1px solid #999999; padding: 5px;"
               th:field="*{content}"
               type="text"></textarea>
     <br><br>
-    <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+    <input class="btn btn-primary btn-lg" type="submit" th:value="#{button.create}">
   </form>
   <div style="text-align: center">
     <a class="btn btn-danger btn-lg "
+       th:text="#{button.delete}"
        th:href="@{'/blogs/' + ${blog.id} + '/delete'}">
       Delete
     </a>
