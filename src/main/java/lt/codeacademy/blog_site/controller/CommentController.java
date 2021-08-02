@@ -31,7 +31,7 @@ public class CommentController {
         return "redirect:/blogs/" + blogId + "/view";
     }
 
-    @PreAuthorize("hasRole('USER') && authentication.principal.id == #comment.user.id")
+    @PreAuthorize("hasRole('USER') && authentication.principal.id == #comment.user.id || hasRole('ADMIN')")
     @GetMapping("/{commentId}/edit")
     public String editComment(@PathVariable Long blogId, @PathVariable("commentId") Comment comment, Model model) {
         comment.setBlogId(blogId);
@@ -48,13 +48,16 @@ public class CommentController {
         return "redirect:/blogs/" + blogId + "/view";
     }
 
-    @PreAuthorize("hasRole('USER') && authentication.principal.id == #comment.user.id")
+    @PreAuthorize("hasRole('USER') && authentication.principal.id == #comment.user.id || hasRole('ADMIN')")
     @PostMapping("/{commentId}/edit")
-    public String editComment(@PathVariable Long blogId, @PathVariable Long commentId, Comment comment) {
-        comment.setId(commentId);
-        comment.setBlogId(blogId);
-        commentService.save(comment);
-        return "redirect:/blogs/" + comment.getBlogId() + "/view";
+    public String editComment(@PathVariable Long blogId,
+                              @PathVariable("commentId") Comment comment, Comment postComment,
+                              @AuthenticationPrincipal User user) {
+        postComment.setUser(user);
+        postComment.setId(comment.getId());
+        postComment.setBlogId(blogId);
+        commentService.save(postComment);
+        return "redirect:/blogs/" + postComment.getBlogId() + "/view";
     }
 
 }
