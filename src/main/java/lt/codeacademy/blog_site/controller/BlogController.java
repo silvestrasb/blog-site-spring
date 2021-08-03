@@ -4,7 +4,6 @@ import lt.codeacademy.blog_site.entity.Blog;
 import lt.codeacademy.blog_site.entity.Comment;
 import lt.codeacademy.blog_site.service.BlogService;
 import lt.codeacademy.blog_site.service.CommentService;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.annotation.security.RolesAllowed;
 
 @Controller
 @RequestMapping("/blogs")
@@ -71,8 +68,9 @@ public class BlogController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}/edit")
-    public String editBlog(@PathVariable("id") Blog dbBlog, Blog blog) {
-        blog.setComments(dbBlog.getComments());
+    public String editBlog(@PathVariable("id") Blog blog, Blog blogDTO) {
+        blog.setContent(blogDTO.getContent());
+        blog.setTitle(blogDTO.getTitle());
         blogService.saveBlog(blog);
         return "redirect:/blogs/" + blog.getId() + "/view";
     }
