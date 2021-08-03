@@ -25,7 +25,6 @@ public class User implements UserDetails {
     private String username;
 
     @Column(name = "password")
-    @Size(min = 6, max = 30)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
