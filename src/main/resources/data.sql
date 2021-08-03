@@ -41,3 +41,11 @@ CREATE TABLE user_role
 INSERT INTO role (name)
 VALUES ('USER'),
        ('ADMIN');
+
+INSERT INTO "user" (username, password)
+VALUES ('admin', '{bcrypt}$2a$10$WJvAKW5R1VM2SSaAWf0WYO/FBcovz6X3BpulRoS2FWdUbcCZPo8V2');
+
+
+INSERT INTO user_role (user_id, role_id)
+VALUES (1, 1),
+       (1, 2);
