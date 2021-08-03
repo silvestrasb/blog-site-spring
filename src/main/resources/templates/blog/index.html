@@ -4,7 +4,7 @@
 >
 <head>
 
-    <head th:replace="fragments/layout :: head('Blog list')"></head>
+    <head th:replace="fragments/layout :: head(#{blog.content})"></head>
     <link rel="stylesheet" th:href="@{/css/blog-style.css}">
 </head>
 <body>
