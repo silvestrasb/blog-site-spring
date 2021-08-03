@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BlogService {
+
     private final BlogRepository blogRepository;
 
     public BlogService(BlogRepository blogRepository) {

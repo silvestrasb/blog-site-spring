@@ -51,13 +51,11 @@ public class CommentController {
     @PreAuthorize("hasRole('USER') && authentication.principal.id == #comment.user.id || hasRole('ADMIN')")
     @PostMapping("/{commentId}/edit")
     public String editComment(@PathVariable Long blogId,
-                              @PathVariable("commentId") Comment comment, Comment postComment,
+                              @PathVariable("commentId") Comment comment, Comment commentDTO,
                               @AuthenticationPrincipal User user) {
-        postComment.setUser(user);
-        postComment.setId(comment.getId());
-        postComment.setBlogId(blogId);
-        commentService.save(postComment);
-        return "redirect:/blogs/" + postComment.getBlogId() + "/view";
+        comment.setContent(commentDTO.getContent());
+        commentService.save(comment);
+        return "redirect:/blogs/" + commentDTO.getBlogId() + "/view";
     }
 
 }
